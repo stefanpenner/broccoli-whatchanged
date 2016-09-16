@@ -3,7 +3,11 @@ import FSTree from 'fs-tree-diff';
 import walkSync from 'walk-sync';
 import fs from 'fs';
 
-export default class Whatchanged extends Plugin {
+export default function(nodes, options) {
+  return new Whatchanged(nodes, options)
+}
+
+export class Whatchanged extends Plugin {
   constructor(node, options = {}) {
     super([node], options);
 
@@ -41,3 +45,4 @@ export default class Whatchanged extends Plugin {
     }
   }
 }
+

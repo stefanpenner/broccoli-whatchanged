@@ -4,7 +4,7 @@ import chai from 'chai';
 import chaiFiles from 'chai-files';
 import walkSync from 'walk-sync';
 import fixture from 'fixturify';
-import WhatChanged from '../';
+import whatChanged from '../';
 import builder from 'broccoli-builder';
 import fs from 'fs-extra';
 
@@ -24,7 +24,7 @@ describe('BroccoliWhatchanged', function() {
       'index.js': 'import add from "./add"; const two = add(1); export default two;'
     });
 
-    node = new WhatChanged(input);
+    node = whatChanged(input);
     pipeline = new builder.Builder(node);
   });
 
