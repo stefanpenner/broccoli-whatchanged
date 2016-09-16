@@ -1,6 +1,6 @@
 {
   "name": "broccoli-whatchanged",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "debugging broccoli plugin to log if and what input changed",
   "main": "dist/index.js",
   "scripts": {
