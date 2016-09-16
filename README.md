@@ -9,7 +9,7 @@ var whatchanged = require('broccoli-whatchanged');
 var lib = 'lib';
 
 module.exports = whatchanged(lib);
-// will og on each rebuild "what changed"
+// will log on each rebuild "what changed, [operation, relativePath]"
 ```
 
 #### \w callback
@@ -19,7 +19,7 @@ module.exports = whatchanged(lib);
 var whatchanged = require('broccoli-whatchanged');
 var lib = 'lib';
 
-module.exports = whatchanged(lib, function(patches, beforeTree, afterTree) {
-  debugger
+module.exports = whatchanged(lib, function({ patches, beforeTree, afterTree, plugin }) {
+  debugger; debug, or do what you want.
 });
 ```

@@ -25,7 +25,8 @@ export default class Whatchanged extends Plugin {
       this.options({
         patches,
         last,
-        next
+        next,
+        plugin
       });
     } else {
       console.log(patches.map(([operation, relativePath]) => [operation, relativePath]));
