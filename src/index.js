@@ -1,12 +1,14 @@
 import Plugin from 'broccoli-plugin';
 import FSTree from 'fs-tree-diff';
 import walkSync from 'walk-sync';
+import fs from 'fs';
 
 export default class Whatchanged extends Plugin {
   constructor(node, options = {}) {
     super([node], options);
 
     this._persistentOutput = true;
+    this._inputAndOutputLinked = false;
 
     this.options = options;
     this.last = new FSTree.fromEntries([]);
@@ -15,8 +17,9 @@ export default class Whatchanged extends Plugin {
   build() {
     const next = FSTree.fromEntries(walkSync.entries(this.inputPaths[0]));
     const last = this.last;
+    this.last = next;
 
-    const patches = last.calculatePatches(next);
+    const patches = last.calculatePatch(next);
 
     if (typeof this.options === 'function') {
       this.options({
@@ -25,12 +28,15 @@ export default class Whatchanged extends Plugin {
         next
       });
     } else {
-      console.log(patches);
+      console.log(patches.map(([operation, relativePath]) => [operation, relativePath]));
     }
 
     // TODO: make work
 
-    fs.unlinkSync(this.outputPath)
-    fs.symlinkSync(this.inputPaths[0], this.outputPath);
+    if (this._inputAndOutputLinked) {
+      fs.rmdir(this.outputPath)
+      fs.symlinkSync(this.inputPaths[0], this.outputPath);
+      this._inputAndOutputLinked = true;
+    }
   }
 }
